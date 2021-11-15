@@ -18,16 +18,6 @@ public class LSH {
         // for each band, store an array of all partial signatures
         int[][] bandInput = new int[b][K];
 
-//        List<String> signatureStrList = new ArrayList<>();
-//        for(int i=0; i<N; i++){
-//            int[] curSignature = signatures.get(i);
-//            StringBuilder sb = new StringBuilder();
-//            for(int j=0; j<curSignature.length; j++){
-//                sb.append(curSignature[j]);
-//            }
-//            signatureStrList.add(sb.toString());
-//        }
-
         HashSet<Integer> res = new HashSet<>();
 
         // for all bands
@@ -43,7 +33,7 @@ public class LSH {
                 for (int idx = startIdx; idx < endIdx - 1; idx++) {
                     currentStr.append(signatures.get(j)[idx]);
                 }
-                System.out.println(currentStr);
+//                System.out.println(currentStr);
 
                 // do not use string builder to calculate hash code
                 // because it do not overwrite hashcode function

@@ -1,11 +1,4 @@
-import org.apache.flink.api.common.functions.ReduceFunction;
 import org.apache.flink.api.java.DataSet;
-import org.apache.flink.api.java.ExecutionEnvironment;
-import org.apache.flink.api.java.tuple.Tuple2;
-
-import java.io.File;
-import java.util.List;
-import java.util.Objects;
 
 public class CompareSets{
 

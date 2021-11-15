@@ -21,7 +21,7 @@ public class MinHashing {
     int N = 0;  // how many different sets (documents)
     int K = 0;  // how many different hash functions
 
-    int PRIME = 73;
+    int PRIME = 7;
 
     // builds a minHash signature (in the form of a vector or a set)
     // of a given length n from a given set of integers (a set of hashed shingles).
@@ -36,6 +36,7 @@ public class MinHashing {
         K = _K;
         File shingleResultsDir = new File(shingleResultsDirPath);
         String[] docs = shingleResultsDir.list();
+
         N = docs.length;
 
         ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
@@ -62,11 +63,12 @@ public class MinHashing {
         for(String str : totalSet.collect()){
             shingleMap.put(str, idx++);
         }
+
         List<String> totalSetList = totalSet.collect();
-        System.out.println(totalSetList);
         for(String doc: docs){
             int[] vector = new int[M];
-            List<String> hashcodes = env.readTextFile(shingleResultsDirPath + "\\" + doc).collect();
+            List<String> hashcodes = env.readTextFile(shingleResultsDirPath + "\\" + doc).setParallelism(1).collect();
+//            System.out.println(hashcodes);
 
             for(int i=0; i<totalSetList.size(); i++){
                 if(hashcodes.contains(totalSetList.get(i))){

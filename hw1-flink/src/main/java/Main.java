@@ -1,5 +1,4 @@
 import org.apache.flink.api.java.DataSet;
-import scala.Int;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,7 +23,7 @@ public class Main {
         }
 
         MinHashing minHashing = new MinHashing();
-        List<int[]> minHashSignatures = minHashing.createMinHashSignatures(10, resultPath + "\\shingle_results");
+        List<int[]> minHashSignatures = minHashing.createMinHashSignatures(200, resultPath + "\\shingle_results");
         CompareSignatures compareSignatures = new CompareSignatures();
         for(int i=0; i<minHashSignatures.size(); i++){
             for(int j=i+1; j<minHashSignatures.size(); j++){
@@ -34,9 +33,9 @@ public class Main {
         }
 
         LSH lsh = new LSH();
-        HashSet<Integer> signatureIndexes = lsh.getCandidates(minHashSignatures, 3, 1000);
+        HashSet<Integer> signatureIndexes = lsh.getCandidates(minHashSignatures, 40, 1000);
 
-        System.out.println(signatureIndexes);
+        System.out.println(signatureIndexes + " are the ones who are similar according to LSH");
 
 
     }

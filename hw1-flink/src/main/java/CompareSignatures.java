@@ -1,4 +1,3 @@
-import org.apache.flink.api.java.DataSet;
 
 public class CompareSignatures {
     public double compareSignatures(int[] signature1, int[] signature2) throws Exception {
