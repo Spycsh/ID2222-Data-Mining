@@ -8,17 +8,14 @@ public class LSH {
     // finds candidate pairs of signatures agreeing on
     // at least fraction t of their components
     // return a list of doc index that need to be compared
-    public HashSet<Integer> getCandidates(List<int[]> signatures, int b, int K) {
+    public HashSet<HashSet<Integer>> getCandidates(List<int[]> signatures, int b, int K) {
         int N = signatures.size();          // the length of signatures
         int M = signatures.get(0).length;   // the length of a signature
         this.b = b;
         this.r = M / b;
         this.K = K;
 
-        // for each band, store an array of all partial signatures
-        int[][] bandInput = new int[b][K];
-
-        HashSet<Integer> res = new HashSet<>();
+        HashSet<HashSet<Integer>> res = new HashSet<>();
 
         // for all bands
         for (int i = 0; i < b; i++) { // for the i-th band
@@ -32,6 +29,7 @@ public class LSH {
                 StringBuilder currentStr = new StringBuilder();
                 for (int idx = startIdx; idx < endIdx - 1; idx++) {
                     currentStr.append(signatures.get(j)[idx]);
+                    currentStr.append(" ");
                 }
 //                System.out.println(currentStr);
 
@@ -45,11 +43,14 @@ public class LSH {
                 buckets.put(bucketIdx, signatureIndexes);
             }
             for (int k = 0; k < K; k++) { // for k-th bucketIdx
+                HashSet<Integer> similarSet = new HashSet<>();
                 if (buckets.get(k) != null && buckets.get(k).size() >= 2) {
                     for (int signatureIdx : buckets.get(k)) {
-                        res.add(signatureIdx);
+                        similarSet.add(signatureIdx);
                     }
                 }
+                if(similarSet.size()!=0)
+                    res.add(similarSet);
             }
         }
         return res;

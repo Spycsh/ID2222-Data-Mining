@@ -1,13 +1,6 @@
 import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.common.functions.ReduceFunction;
-import org.apache.flink.api.common.operators.Order;
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
-import org.apache.flink.api.java.operators.DistinctOperator;
-import org.apache.flink.api.java.operators.MapOperator;
-import org.apache.flink.api.java.operators.UnionOperator;
-import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.util.Collector;
 
 
@@ -21,7 +14,7 @@ public class MinHashing {
     int N = 0;  // how many different sets (documents)
     int K = 0;  // how many different hash functions
 
-    int PRIME = 7;
+    int PRIME = 231;
 
     // builds a minHash signature (in the form of a vector or a set)
     // of a given length n from a given set of integers (a set of hashed shingles).
@@ -55,6 +48,7 @@ public class MinHashing {
         for(int i = 0; i<K; i++){
             coefficients[i][0] = rand.nextInt(PRIME);    // a
             coefficients[i][1] = rand.nextInt(PRIME);    // b
+//            System.out.println(coefficients[i][0]+":"+coefficients[i][1]);
         }
         int c = M;
 
@@ -83,8 +77,9 @@ public class MinHashing {
                 int min = Integer.MAX_VALUE;
                 for(int t=0; t<vector.length; t++){
                     if(vector[t] == 1){
-                        int index = (t * a + b) % c;
+                        int index = (t * a + b + M) % c;    // plus M to avoid the situation when ax+b < c
                         min = Math.min(index, min);
+
                     }
                 }
                 resVector[i] = min;

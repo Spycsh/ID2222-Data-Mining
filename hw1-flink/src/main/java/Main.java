@@ -33,7 +33,7 @@ public class Main {
         }
 
         LSH lsh = new LSH();
-        HashSet<Integer> signatureIndexes = lsh.getCandidates(minHashSignatures, 40, 1000);
+        HashSet<HashSet<Integer>> signatureIndexes = lsh.getCandidates(minHashSignatures, 50, 1000);
 
         System.out.println(signatureIndexes + " are the ones who are similar according to LSH");
 

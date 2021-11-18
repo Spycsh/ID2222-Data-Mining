@@ -25,7 +25,7 @@ public class Shingling {
             // because flink does not guarantee sequential parallel processing of lines
             // without providing time or extra information
             DataSet<Integer> resultSet = fileContent.flatMap(new MyFlatMapper(N)).distinct();
-            System.out.println(resultSet.collect());
+            System.out.println(filePath+" shingles: "+resultSet.collect());
 
             // write to results folder, set parallelism to be 1 to keep all content in one file
             resultSet.writeAsText(sinkDir + "\\shingle" + fileIdx + ".txt", FileSystem.WriteMode.OVERWRITE).setParallelism(1);
