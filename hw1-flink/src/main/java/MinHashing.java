@@ -50,7 +50,13 @@ public class MinHashing {
             coefficients[i][1] = rand.nextInt(PRIME);    // b
 //            System.out.println(coefficients[i][0]+":"+coefficients[i][1]);
         }
-        int c = M;
+        int c = M+1;
+//         c should be the a prime number that is larger than M
+//         https://www.zhihu.com/question/20806796/answer/2232672533
+        while(!isPrime(c)){
+            c++;
+        }
+        System.out.println("c is: "+c);
 
         HashMap<String, Integer> shingleMap = new HashMap<>();
         int idx = 0;
@@ -62,7 +68,6 @@ public class MinHashing {
         for(String doc: docs){
             int[] vector = new int[M];
             List<String> hashcodes = env.readTextFile(shingleResultsDirPath + "\\" + doc).setParallelism(1).collect();
-//            System.out.println(hashcodes);
 
             for(int i=0; i<totalSetList.size(); i++){
                 if(hashcodes.contains(totalSetList.get(i))){
@@ -77,7 +82,7 @@ public class MinHashing {
                 int min = Integer.MAX_VALUE;
                 for(int t=0; t<vector.length; t++){
                     if(vector[t] == 1){
-                        int index = (t * a + b + M) % c;    // plus M to avoid the situation when ax+b < c
+                        int index = (t * a + b) % c;
                         min = Math.min(index, min);
 
                     }
@@ -101,6 +106,19 @@ public class MinHashing {
                 collector.collect(hashcode);
             }
         }
+    }
+
+    public boolean isPrime(int n){
+        // Corner case
+        if (n <= 1)
+            return false;
+
+        // Check from 2 to n-1
+        for (int i = 2; i < Math.sqrt(n); i++)
+            if (n % i == 0)
+                return false;
+
+        return true;
     }
 
 }
