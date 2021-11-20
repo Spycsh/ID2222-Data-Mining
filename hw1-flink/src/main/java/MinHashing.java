@@ -14,7 +14,7 @@ public class MinHashing {
     int N = 0;  // how many different sets (documents)
     int K = 0;  // how many different hash functions
 
-    int PRIME = 231;
+    int RAND = 200;
 
     // builds a minHash signature (in the form of a vector or a set)
     // of a given length n from a given set of integers (a set of hashed shingles).
@@ -46,8 +46,8 @@ public class MinHashing {
         // calculate the coefficient of the hash function
         // (ax + b) % c
         for(int i = 0; i<K; i++){
-            coefficients[i][0] = rand.nextInt(PRIME);    // a
-            coefficients[i][1] = rand.nextInt(PRIME);    // b
+            coefficients[i][0] = rand.nextInt(RAND);    // a
+            coefficients[i][1] = rand.nextInt(RAND);    // b
 //            System.out.println(coefficients[i][0]+":"+coefficients[i][1]);
         }
         int c = M+1;
